@@ -4,7 +4,10 @@ const getAllTasks = (req, res) => {
 }
 
 const createTask = (req, res) => {
-  res.send('Task created');
+  const task = req.body;
+  console.log('New Task:', task);
+
+  res.send(req.body);
 }
 
 const getTask = (req, res) => {
@@ -14,6 +17,9 @@ const getTask = (req, res) => {
 
 const updateTask = (req, res) => {
   const taskID = req.params.id;
+  const task = req.body;
+  console.log(`Updated task with ID ${taskID}:`, task);
+
   res.send(`Updating task with ID ${taskID}`);
 }
 
