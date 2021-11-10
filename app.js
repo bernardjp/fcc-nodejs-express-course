@@ -1,5 +1,6 @@
 import express from 'express';
 import tasksRoutes from './routes/tasksRoutes.js';
+import { notFound } from './middlewares/not-found.js';
 import { connectDB } from './db/connect.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -26,3 +27,4 @@ app.use(express.json());
 
 // Routing
 app.use(`${APIEndpointStart}/tasks`, tasksRoutes);
+app.use(notFound);
