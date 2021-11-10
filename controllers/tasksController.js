@@ -1,16 +1,6 @@
 import Task from '../models/TaskModel.js';
 import asyncWrapper from '../middlewares/async-wrapper.js';
 
-// const getAllTasks = async (req, res) => {
-//   try {
-//     const tasks = await Task.find({});
-//     res.status(200).json({ tasks }) 
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json(error)
-//   }
-// }
-
 const getAllTasks = asyncWrapper(async (req, res) => {
   const tasks = await Task.find({});
   res.status(200).json({ tasks }) 
