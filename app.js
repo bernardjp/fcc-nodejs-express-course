@@ -21,9 +21,8 @@ connectDB(process.env.DB_CONNECTION_STRING)
   .catch(error => console.log(error));
 
 // Middleware
+app.use(express.static('./public'));
 app.use(express.json());
 
 // Routing
 app.use(`${APIEndpointStart}/tasks`, tasksRoutes);
-
-
