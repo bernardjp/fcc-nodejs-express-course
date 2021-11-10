@@ -73,7 +73,6 @@ const deleteTask = async (req, res) => {
     console.log(error);
     res.status(500).json({ msg: error })
   }
-
 }
 
 export {
