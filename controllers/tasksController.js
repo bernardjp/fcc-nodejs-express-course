@@ -1,5 +1,6 @@
 import Task from '../models/TaskModel.js';
 import asyncWrapper from '../middlewares/async-wrapper.js';
+import { createCustomAPIError } from '../errors/custom-error.js';
 
 const getAllTasks = asyncWrapper(async (req, res) => {
   const tasks = await Task.find({});
@@ -12,18 +13,18 @@ const createTask = asyncWrapper(async (req, res) => {
   res.status(201).json({ taskCreated });
 })
 
-const getTask = asyncWrapper(async (req, res) => {
+const getTask = asyncWrapper(async (req, res, next) => {
   const taskID = req.params.id;
   const task =  await Task.findOne({ _id: taskID });
 
   if (!task) {
-    return res.status(404).json({ msg: `No task with ID: ${taskID} found` })
+    return next(createCustomAPIError(`No resource with ID: ${taskID} found`, 404));
   }
 
   res.status(200).json({ task });
 })
 
-const updateTask = asyncWrapper(async (req, res) => {
+const updateTask = asyncWrapper(async (req, res, next) => {
   const taskID = req.params.id;
   const taskData = req.body;
 
@@ -33,18 +34,18 @@ const updateTask = asyncWrapper(async (req, res) => {
   })
 
   if (!task) {
-    return res.status(404).json({ msg: `No task with ID: ${taskID} found` })
+    return next(createCustomAPIError(`No resource with ID: ${taskID} found`, 404));
   }
 
   res.status(200).json({ task });
 })
 
-const deleteTask = asyncWrapper(async (req, res) => {
+const deleteTask = asyncWrapper(async (req, res, next) => {
   const taskID = req.params.id;
   const deletedTask = await Task.findOneAndDelete({ _id: taskID });
 
   if(!deletedTask) {
-    return res.status(404).json({ msg: `No task with ID: ${taskID} found` });
+    return next(createCustomAPIError(`No resource with ID: ${taskID} found`, 404));
   }
 
   res.status(200).json({ deletedTask });    
