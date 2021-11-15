@@ -32,7 +32,7 @@ const getNumericFilters = (numericFilters) => {
   return filters;
 }
 
-const getAllProducts = async (req, res, next) => {
+export const getAllProducts = async (req, res) => {
   const { featured, company, name, sort = 'createdAt', fields = '', numericFilters } = req.query;
   const productObject = {};
 
@@ -55,9 +55,4 @@ const getAllProducts = async (req, res, next) => {
   const products = await queryResult;
 
   res.status(200).json({ products, nbHits: products.length });
-}
-
-export {
-  getAllProducts,
-  getAllProductsStatic
 }
