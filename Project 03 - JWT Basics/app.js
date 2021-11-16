@@ -1,11 +1,19 @@
-require('dotenv').config();
-require('express-async-errors');
+import express from 'express';
+import 'express-async-errors';
+import notFoundMiddleware from './middleware/not-found.js';
+import errorHandlerMiddleware from './middleware/error-handler.js';
+import connectDB from './db/connect.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const express = require('express');
+// require('dotenv').config();
+// require('express-async-errors');
+
+// const express = require('express');
 const app = express();
 
-const notFoundMiddleware = require('./middleware/not-found');
-const errorHandlerMiddleware = require('./middleware/error-handler');
+// const notFoundMiddleware = require('./middleware/not-found');
+// const errorHandlerMiddleware = require('./middleware/error-handler');
 
 // middleware
 app.use(express.static('./public'));
