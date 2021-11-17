@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
-import CustomError from '../errors/custom-error.js';
+import { BadRequestError } from '../errors/index.js';
 
 const login = (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password) throw new CustomError('Please provide email and password', 400);
+  if (!username || !password) throw new BadRequestError('Please provide email and password');
 
   const id = new Date().getDate();
   const token = jwt.sign({ id, username }, process.env.JWT_SECRET, { expiresIn:'30d' });
