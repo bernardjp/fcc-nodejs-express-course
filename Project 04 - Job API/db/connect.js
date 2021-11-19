@@ -3,9 +3,10 @@ import mongoose from 'mongoose';
 const connectDB = (url) => {
   return mongoose.connect(url, {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
     useUnifiedTopology: true,
+    // options not supported on versions 6.0+
+    // useCreateIndex: true,
+    // useFindAndModify: false,
   })
 }
 
