@@ -4,6 +4,7 @@ import notFoundMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
 import authRouter from './routes/auth.js';
 import jobsRouter from './routes/jobs.js';
+import authenticateUser from './middleware/authentication.js';
 import connectDB from './db/connect.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -19,7 +20,7 @@ app.use(express.json());
 // routes
 app.get(`${apiPath}`, (req, res) => res.send('jobs api'));
 app.use(`${apiPath}/auth`, authRouter);
-app.use(`${apiPath}/jobs`, jobsRouter);
+app.use(`${apiPath}/jobs`, authenticateUser, jobsRouter);
 
 // error-handling
 app.use(notFoundMiddleware);
