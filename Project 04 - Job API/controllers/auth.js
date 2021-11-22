@@ -1,11 +1,12 @@
 import UserModel from '../models/User.js';
 import { StatusCodes } from 'http-status-codes';
-// import jwt from 'jsonwebtoken';
-// import { BadRequestError } from '../errors';
+import { BadRequestError } from '../errors/index.js';
 
 const register = async (req, res) => {
-  const newUser = await UserModel.create({ ...req.body });
-  res.status(StatusCodes.CREATED).json({ msg: 'Success: User created.', data: newUser });
+  const user = await UserModel.create({ ...req.body });
+  const token = user.createJWT();
+
+  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 }
 
 const login = async (req, res) => {
