@@ -1,4 +1,8 @@
 import express from 'express';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import 'express-async-errors';
 import notFoundMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
@@ -13,9 +17,17 @@ const app = express();
 const apiPath = '/api/v1';
 
 // body-parser
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 
 // extra packages
+app.use(rateLimit({
+  max: 50,
+  windowMs: 60 * 60 * 1000,
+  message: 'Request denied. You have reached the API request limit. Try again later.'
+}));
+app.use(helmet());
+app.use(xss());
+app.use(cors());
 
 // routes
 app.get(`${apiPath}`, (req, res) => res.send('jobs api'));
