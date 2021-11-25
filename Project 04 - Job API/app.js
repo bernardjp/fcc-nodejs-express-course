@@ -20,11 +20,13 @@ const apiPath = '/api/v1';
 app.use(express.json({ limit: '10kb' }));
 
 // extra packages
+app.set('trust proxy', 1);
 app.use(rateLimit({
   max: 50,
   windowMs: 60 * 60 * 1000,
   message: 'Request denied. You have reached the API request limit. Try again later.'
 }));
+
 app.use(helmet());
 app.use(xss());
 app.use(cors());
